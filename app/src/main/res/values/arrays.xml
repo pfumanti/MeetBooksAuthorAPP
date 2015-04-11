@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_states_options">
+        <item>@string/pref_states_label_any</item>
+        <item>@string/pref_states_label_ca</item>
+        <item>@string/pref_states_label_dc</item>
+        <item>@string/pref_states_label_il</item>
+        <item>@string/pref_states_label_ma</item>
+    </string-array>
+    <string-array name="pref_states_values">
+        <item>@string/pref_states_any</item>
+        <item>@string/pref_states_ca</item>
+        <item>@string/pref_states_dc</item>
+        <item>@string/pref_states_il</item>
+        <item>@string/pref_states_ma</item>
+    </string-array>
+
+</resources>

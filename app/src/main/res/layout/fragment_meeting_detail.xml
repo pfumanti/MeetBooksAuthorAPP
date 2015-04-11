@@ -1,0 +1,100 @@
+<!--
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.android.meetbooksauthor.MeetingDetailActivity$PlaceholderFragment">
+
+    <TextView  android:id="@+id/detail_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <!-- Header: Day, Date -->
+        <TextView
+            android:id="@+id/detail_author_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Autore" />
+        <TextView
+            android:id="@+id/detail_book_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome Libro"/>
+        <!-- Main content: high, low, art, weather state -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/detail_city_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="21°"/>
+                <TextView
+                    android:id="@+id/detail_state_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="11°" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/detail_state_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ma" />
+                <!--
+                <TextView
+                    android:id="@+id/detail_forecast_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Clear" />
+                    -->
+            </LinearLayout>
+        </LinearLayout>
+        <!-- Humidity, wind, pressure -->
+        <TextView
+            android:id="@+id/detail_venue_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bookshop Harry" />
+        <TextView
+            android:id="@+id/detail_address_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="23, King Street, Washington, DC" />
+        <TextView
+            android:id="@+id/detail_time_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="9.00 PM" />
+        <TextView
+            android:id="@+id/detail_booking_date_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="9.00 PM" />
+    </LinearLayout>
+</ScrollView>

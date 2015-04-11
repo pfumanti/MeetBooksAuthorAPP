@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!-- Used in Action Bar, and in AndroidManifest to tell the device the name of this app. -->
+    <string name="app_name">Meet Books Authors</string>
+    <string name="action_settings">Settings</string>
+    <!-- Menu label to fetch updated Books Author Meeting info from the server -->
+    <string name="action_refresh" translatable="false">Refresh</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_meeting_detail">Details</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <string name="action_share">Share</string>
+
+    <!-- Settings Params for remaing days before meeting -->
+    <string name="pref_remaining_days_label">Days to Tour</string>
+    <string name="pref_remaining_days_key" translatable="false">remaining_day</string>
+    <string name="pref_remaining_days_default" translatable="false">4</string>
+
+    <!-- Settings Params for states selection -->
+    <string name="pref_states_label">States selection</string>
+    <!-- Key name for states preference in SharedPreferences [CHAR LIMIT=NONE] -->
+    <string name="pref_states_key" translatable="false">state</string>
+
+    <!-- Label for "Any" option in states preference [CHAR LIMIT=25] -->
+    <string name="pref_states_label_any">Any States</string>
+    <string name="pref_states_any" translatable="false"></string>
+    <!-- Label and values for California -->
+    <string name="pref_states_label_ca">California</string>
+    <string name="pref_states_ca" translatable="false">CA</string>
+    <!-- Label and values for District of Columbia -->
+    <string name="pref_states_label_dc">District of Columbia</string>
+    <string name="pref_states_dc" translatable="false">DC</string>
+    <!-- Label and values for Illinois (Chigaco) -->
+    <string name="pref_states_label_il">Illinois</string>
+    <string name="pref_states_il" translatable="false">IL</string>
+    <!-- Label and values for Massachusetts -->
+    <string name="pref_states_label_ma">Massachusetts</string>
+    <string name="pref_states_ma" translatable="false">MA</string>
+
+    <!-- Value in SharedPreferences for metric temperature unit option [CHAR LIMIT=NONE] -->
+
+    <!-- Value in SharedPreferences for imperial temperature unit option [CHAR LIMIT=NONE] -->
+
+
+</resources>
