@@ -37,15 +37,7 @@ import java.util.Vector;
 
     private final Context mContext;
 
-    //Deleted after introducing MeetingAdapter
-    /*
-    public FetchMeetingTask(Context context, ArrayAdapter<String> meetingAdapter) {
-        mContext = context;
-        mMeetingAdapter = meetingAdapter;
-    }
-    */
-
-    public FetchMeetingTask(Context context) {
+     public FetchMeetingTask(Context context) {
         mContext = context;
     }
 
@@ -149,7 +141,7 @@ import java.util.Vector;
         }
 
 
-        Log.d(LOG_TAG, "FetchMeetingTask Complete. " + inserted + " Inserted");
+        Log.d(LOG_TAG, "####FetchMeetingTask Complete. " + inserted + " Inserted");
 
     } catch (JSONException e) {
         Log.e(LOG_TAG, e.getMessage(), e);
@@ -207,7 +199,7 @@ import java.util.Vector;
             URL url = new URL(builtUri.toString());
 
             // URL url = new URL(builtUri.toString());
-             Log.v(LOG_TAG, "Built URI " + builtUri.toString());
+             Log.v(LOG_TAG, "####Built URI " + builtUri.toString());
 
             // Create the request to harpercollins, and open the connection
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -260,19 +252,7 @@ import java.util.Vector;
 
     }
 
-    //Execute when load data is finished. Param result is return from doInbackground
-    /*
-    @Override
-    protected void onPostExecute(String[] result) {
-        if (result != null) {
-            mMeetingAdapter.clear();
-            for (String dayMeetingStr : result) {
-                mMeetingAdapter.add(dayMeetingStr);
-            }
-            // New data is back from the server. Hooray!
-        }
-    }
-    */
+
 }
 
 

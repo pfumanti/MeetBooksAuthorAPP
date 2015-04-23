@@ -1,0 +1,6 @@
+<resources>
+   <style name="MeetingListStyle">
+      <!-- for tablets we include the singleChoiceMode -->
+      <item name="android:choiceMode">singleChoice</item>
+   </style>
+</resources>

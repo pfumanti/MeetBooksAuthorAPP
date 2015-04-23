@@ -86,7 +86,9 @@ public class MeetingContract {
         }
 
         public static String getStateSettingFromUri(Uri uri) {
-              return uri.getQueryParameter(COLUMN_STATE_ID);
+            return uri.getPathSegments().get(1);
+           // return uri.getQueryParameter(COLUMN_STATE_ID);
+            //uri.getPathSegments().(1);
         }
 
 

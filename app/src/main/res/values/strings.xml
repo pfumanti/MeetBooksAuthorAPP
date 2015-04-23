@@ -21,6 +21,7 @@
     <string name="pref_states_label">States selection</string>
     <!-- Key name for states preference in SharedPreferences [CHAR LIMIT=NONE] -->
     <string name="pref_states_key" translatable="false">state</string>
+    <string name="pref_states_default" translatable="false">DC</string>
 
     <!-- Label for "Any" option in states preference [CHAR LIMIT=25] -->
     <string name="pref_states_label_any">Any States</string>

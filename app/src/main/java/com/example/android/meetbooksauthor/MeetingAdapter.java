@@ -3,6 +3,7 @@ package com.example.android.meetbooksauthor;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ public class MeetingAdapter extends CursorAdapter {
     public MeetingAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);
     }
+
+    private final String LOG_TAG = MeetingAdapter.class.getSimpleName();
 
     /*
     private String convertCursorRowToUXFormat(Cursor cursor) {
@@ -67,6 +70,9 @@ public class MeetingAdapter extends CursorAdapter {
         //TMP
         //TextView tv = (TextView)view;
         //tv.setText(convertCursorRowToUXFormat(cursor));
+
+        Log.d(LOG_TAG, "####bindView ");
+
         int idx_book_title =  cursor.getColumnIndex(MeetingContract.MeetingEntry.COLUMN_BOOK_TITLE);
         String bookTitle = cursor.getString(idx_book_title);
         TextView bookTitleView = (TextView) view.findViewById(R.id.list_item_book_textview);

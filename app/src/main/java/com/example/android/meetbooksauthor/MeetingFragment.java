@@ -1,15 +1,13 @@
 package com.example.android.meetbooksauthor;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,8 +26,17 @@ import com.example.android.meetbooksauthor.data.MeetingContract;
 //define our callbacks
 public class MeetingFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    private MeetingAdapter mMeetingAdapter;
+    private ListView mListView;
+    private int mPosition = ListView.INVALID_POSITION;
+    private static final String SELECTED_KEY = "selected_position";
+
     //use a different id for each cursor in our activity
     public static final int MEETING_CURSOR_LOADER = 0;
+
+
+    private final String LOG_TAG = MeetingFragment.class.getSimpleName();
+
 
     // Specify the columns we need.
     private static final String[] MEETING_COLUMNS = {
@@ -70,9 +77,21 @@ public class MeetingFragment extends Fragment implements LoaderManager.LoaderCal
     static final int COL_BOOKING_DATE = 11;
     static final int COL_CITY = 12;
 
-    private MeetingAdapter mMeetingAdapter;
+   // private MeetingAdapter mMeetingAdapter;
 
     public MeetingFragment() {
+    }
+
+    /**
+     * A callback interface that all activities containing this fragment must
+     * implement. This mechanism allows activities to be notified of item
+     * selections.
+     */
+    public interface Callback {
+        /**
+         * DetailFragmentCallback for when an item has been selected.
+         */
+        public void onItemSelected(Uri dateUri);
     }
 
     @Override
@@ -103,29 +122,61 @@ public class MeetingFragment extends Fragment implements LoaderManager.LoaderCal
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // The CursorAdapter will take data from our cursor and populate the ListView.
+        // TheMeetingAdapter will take data from a source and
+        // use it to populate the ListView it's attached to.
         mMeetingAdapter = new MeetingAdapter(getActivity(), null, 0);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         // Get a reference to the ListView, and attach this adapter to it.
-        ListView listView = (ListView) rootView.findViewById(R.id.listview_meeting);
-        listView.setAdapter(mMeetingAdapter);
+        mListView = (ListView) rootView.findViewById(R.id.listview_meeting);
+        mListView.setAdapter(mMeetingAdapter);
 
         // We'll call our MainActivity
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+
 // CursorAdapter returns a cursor at the correct position for getItem(), or null
 // if it cannot seek to that position.
                 Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
                 if (cursor != null) {
 
-                    Intent intent = new Intent(getActivity(), MeetingDetailActivity.class)
-                            .setData(MeetingContract.MeetingEntry.buildMeetingUri());
-                    startActivity(intent);
+                    String locationSetting = Uty.getStateLocation(getActivity());
+                    //Intent intent = new Intent(getActivity(), MeetingDetailActivity.class)
+                    //        .setData(MeetingContract.MeetingEntry.buildMeetingLocation("MA")); //buildMeetingUri());
+                    ((Callback) getActivity())
+                             .onItemSelected(MeetingContract.MeetingEntry.buildMeetingLocation((locationSetting)));
+
+                    String Nome =  cursor.getString(COL_AUTHOR_NAME);
+                    Log.d(LOG_TAG, "############# " + Nome);
+                    /*
+                     String locationSetting = Utility.getPreferredLocation(getActivity());
+                    Intent intent = new Intent(getActivity(), DetailActivity.class)
+                                .setData(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
+                                locationSetting, cursor.getLong(COL_WEATHER_DATE)
+                        ));
+                        startActivity(intent);
+
+                     */
+
+
+                   //tolta dalla callback startActivity(intent);
                 }
+                mPosition = position;
             }
         });
+
+        // If there's instance state, mine it for useful information.
+        // The end-goal here is that the user never knows that turning their device sideways
+        // does crazy lifecycle related things. It should feel like some stuff stretched out,
+        // or magically appeared to take advantage of room, but data or place in the app was never
+        // a    ctually *lost*.
+        if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
+            // The listview probably hasn't even been populated yet. Actually perform the
+            // swapout in onLoadFinished.
+            mPosition = savedInstanceState.getInt(SELECTED_KEY);
+        }
 
 
         return rootView;
@@ -140,21 +191,36 @@ public class MeetingFragment extends Fragment implements LoaderManager.LoaderCal
    }
 
 
-   private void updateMeetingList() {
-        //FetchMeetingTask meetingTask = new FetchMeetingTask(getActivity(), mMeetingAdapter);
-        FetchMeetingTask meetingTask = new FetchMeetingTask(getActivity());
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        //In no value is stored in the pair <key-value>, then get default value
-        String remaining_days = prefs.getString(getString(R.string.pref_remaining_days_key), getString(R.string.pref_remaining_days_default));
-        String state_location = prefs.getString(getString(R.string.pref_states_key),getString(R.string.pref_states_ma));
-        meetingTask.execute(remaining_days, state_location);
-
-    }
-
     void onLocationChanged( ) {
         updateMeetingList();
         getLoaderManager().restartLoader(MEETING_CURSOR_LOADER, null, this);
     }
+
+
+   private void updateMeetingList() {
+        //FetchMeetingTask meetingTask = new FetchMeetingTask(getActivity(), mMeetingAdapter);
+        FetchMeetingTask meetingTask = new FetchMeetingTask(getActivity());
+        String locationSetting = Uty.getStateLocation(getActivity());
+        String remaining_days = Uty.getRemainingDays(getActivity());
+       Log.d(LOG_TAG, "######## MeetingFragment:updateMeetingList:State=" + locationSetting + " RemDays=" + remaining_days);
+
+        meetingTask.execute(remaining_days, locationSetting);
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+// When tablets rotate, the currently selected list item needs to be saved.
+// When no item is selected, mPosition will be set to Listview.INVALID_POSITION,
+// so check for that before storing.
+        if (mPosition != ListView.INVALID_POSITION) {
+            outState.putInt(SELECTED_KEY, mPosition);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+
+
 
    // @Override
     //When fragment starts ... call updateMeeting
@@ -169,19 +235,33 @@ public class MeetingFragment extends Fragment implements LoaderManager.LoaderCal
    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
            // String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATE + " ASC";
 
-            Uri uri = MeetingContract.MeetingEntry.buildMeetingUri();
+            String locationSetting = Uty.getStateLocation(getActivity());
+            Uri uri = MeetingContract.MeetingEntry.buildMeetingLocation(locationSetting);
 
             return new CursorLoader(getActivity(),
                     uri,
-                    null,//MEETING_COLUMNS, //null
+                    MEETING_COLUMNS,
                     null,
                     null,
                     null);
         }
+
+       // @Override
+       // public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+       //     mMeetingAdapter.swapCursor(cursor);
+       // }
+
         @Override
-        public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-            mMeetingAdapter.swapCursor(cursor);
+        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+            mMeetingAdapter.swapCursor(data);
+            Log.d(LOG_TAG, "######## MeetingFragment:onLoadFinished");
+            if (mPosition != ListView.INVALID_POSITION) {
+                // If we don't need to restart the loader, and there's a desired position to restore
+                // to, do so now.
+                mListView.smoothScrollToPosition(mPosition);
+            }
         }
+
         @Override
         public void onLoaderReset(Loader<Cursor> cursorLoader) {
             mMeetingAdapter.swapCursor(null);

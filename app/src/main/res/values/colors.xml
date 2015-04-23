@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <resources>
+    <color name="grey">#cccccc</color>
+    <color name="yellow_sand">#f5ef9A</color>
+    <color name="meeting_blue">#ff1ca8f4</color>
+   <color name="meeting_dark_blue">#0288D1</color>
+</resources>

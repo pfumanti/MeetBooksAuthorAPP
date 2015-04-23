@@ -47,7 +47,7 @@ public class MeetingProvider extends ContentProvider {
 
     //location.location_setting = ?
     private static final String sStateSettingSelection =
-            MeetingContract.MeetingEntry.TABLE_NAME+
+            MeetingContract.MeetingEntry.TABLE_NAME +
                     "." + MeetingContract.MeetingEntry.COLUMN_STATE_ID + " = ? ";
 
     //location.location_setting = ? AND date >= ?
